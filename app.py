@@ -28,12 +28,9 @@ if uploaded_image is not None:
     st.success("File Uploaded")
     
     # Load Model
-    # rf = Roboflow(api_key="Y95ShsJtRcyJAdaeUnOX")
-    # project = rf.workspace("school-ermrh").project("padi-detection")
-    # model = project.version(8).model
-
-    model = torch.load('model/best.pt', map_location=torch.device('cpu'))
-    model.eval()
+    rf = Roboflow(api_key="Y95ShsJtRcyJAdaeUnOX")
+    project = rf.workspace("school-ermrh").project("padi-detection")
+    model = project.version(8).model
 
     # Detect Objects
     with st.spinner('Inferring...'):
