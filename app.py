@@ -2,6 +2,7 @@ import streamlit as st
 from roboflow import Roboflow
 from PIL import Image, ImageDraw, ImageFont
 from functions import *
+import torch
 
 # Set up Streamlit layout
 st.set_page_config(page_title='YOLOv5 | rice padi and rice weeviles', 
@@ -27,9 +28,12 @@ if uploaded_image is not None:
     st.success("File Uploaded")
     
     # Load Model
-    rf = Roboflow(api_key="Y95ShsJtRcyJAdaeUnOX")
-    project = rf.workspace("school-ermrh").project("padi-detection")
-    model = project.version(8).model
+    # rf = Roboflow(api_key="Y95ShsJtRcyJAdaeUnOX")
+    # project = rf.workspace("school-ermrh").project("padi-detection")
+    # model = project.version(8).model
+
+    model = torch.load('model/best.pt', map_location=torch.device('cpu'))
+    model.eval()
 
     # Detect Objects
     with st.spinner('Inferring...'):
